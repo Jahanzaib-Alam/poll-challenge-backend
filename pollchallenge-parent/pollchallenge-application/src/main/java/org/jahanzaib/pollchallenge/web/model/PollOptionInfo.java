@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PollOptionInfo {
+	private int id;
 	private String optionText;
 	private int numVotes;
 	private List<PollVoteInfo> votes;

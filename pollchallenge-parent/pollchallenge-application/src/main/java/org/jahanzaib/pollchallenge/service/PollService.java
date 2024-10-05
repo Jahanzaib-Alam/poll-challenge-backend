@@ -73,7 +73,7 @@ public class PollService {
 		List<PollOption> fetchedOptions = dao.fetchPollOptionsByPollId(pollId);
 		for (PollOption option : fetchedOptions) {
 			List<PollVoteInfo> votesInfo = getVotesForOption(option.getId());
-			PollOptionInfo optionInfo = new PollOptionInfo(option.getOptionText(), votesInfo.size(), votesInfo);
+			PollOptionInfo optionInfo = new PollOptionInfo(option.getId(), option.getOptionText(), votesInfo.size(), votesInfo);
 			optionsInfo.add(optionInfo);
 		}
 		return optionsInfo;

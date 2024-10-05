@@ -11,5 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PollOptionInfo {
 	private String optionText;
+	private int numVotes;
 	private List<PollVoteInfo> votes;
 }

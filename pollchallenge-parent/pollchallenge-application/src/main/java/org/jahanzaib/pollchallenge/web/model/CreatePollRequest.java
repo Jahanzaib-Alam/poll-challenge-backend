@@ -1,4 +1,4 @@
-package org.jahanzaib.pollchallenge.web.model.request;
+package org.jahanzaib.pollchallenge.web.model;
 
 import java.util.List;
 

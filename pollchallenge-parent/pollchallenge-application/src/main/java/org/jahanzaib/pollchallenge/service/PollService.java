@@ -8,12 +8,13 @@ import org.jahanzaib.pollchalenge.generated.tables.pojos.PollOption;
 import org.jahanzaib.pollchalenge.generated.tables.pojos.PollVote;
 import org.jahanzaib.pollchalenge.generated.tables.records.PollOptionRecord;
 import org.jahanzaib.pollchalenge.generated.tables.records.PollRecord;
+import org.jahanzaib.pollchalenge.generated.tables.records.PollVoteRecord;
 import org.jahanzaib.pollchallenge.builder.PollRecordBuilder;
-import org.jahanzaib.pollchallenge.db.PollDao;
+import org.jahanzaib.pollchallenge.dao.PollDao;
+import org.jahanzaib.pollchallenge.web.model.CreatePollRequest;
 import org.jahanzaib.pollchallenge.web.model.PollInfo;
 import org.jahanzaib.pollchallenge.web.model.PollOptionInfo;
 import org.jahanzaib.pollchallenge.web.model.PollVoteInfo;
-import org.jahanzaib.pollchallenge.web.model.request.CreatePollRequest;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -73,5 +74,11 @@ public class PollService {
 			votesInfo.add(new PollVoteInfo(vote.getPlacedDateTime()));
 		}
 		return votesInfo;
+	}
+	
+	public boolean placeVote(int optionId) {
+		PollVoteRecord voteRecord = recordBuilder.buildVoteRecord(optionId);
+		
+		return dao.insertVote(voteRecord);
 	}
 }

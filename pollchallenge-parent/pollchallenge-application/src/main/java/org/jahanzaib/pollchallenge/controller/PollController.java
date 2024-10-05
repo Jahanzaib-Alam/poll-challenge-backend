@@ -1,9 +1,8 @@
 package org.jahanzaib.pollchallenge.controller;
 
 import org.jahanzaib.pollchallenge.service.PollService;
+import org.jahanzaib.pollchallenge.web.model.CreatePollRequest;
 import org.jahanzaib.pollchallenge.web.model.PollInfo;
-import org.jahanzaib.pollchallenge.web.model.request.CreatePollRequest;
-import org.jahanzaib.pollchallenge.web.model.request.VoteRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,10 +40,10 @@ public class PollController {
 		return pollCreated ? ResponseEntity.ok().build() : ResponseEntity.internalServerError().build();
 	}
 	
-	@PostMapping("/vote")
-	public ResponseEntity<Void> placeVote(@RequestBody VoteRequest voteRequest) {
+	@PostMapping("/vote/{option_id}")
+	public ResponseEntity<Void> placeVote(@PathVariable(required=true) int optionId) {
+		boolean votePlaced = service.placeVote(optionId);
 		
-		
-		return ResponseEntity.ok().build();
+		return votePlaced ? ResponseEntity.ok().build() : ResponseEntity.internalServerError().build();
 	}
 }

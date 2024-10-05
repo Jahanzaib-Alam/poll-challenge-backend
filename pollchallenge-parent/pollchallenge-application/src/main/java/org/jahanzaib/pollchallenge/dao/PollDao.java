@@ -1,4 +1,4 @@
-package org.jahanzaib.pollchallenge.db;
+package org.jahanzaib.pollchallenge.dao;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.jahanzaib.pollchalenge.generated.tables.pojos.PollOption;
 import org.jahanzaib.pollchalenge.generated.tables.pojos.PollVote;
 import org.jahanzaib.pollchalenge.generated.tables.records.PollOptionRecord;
 import org.jahanzaib.pollchalenge.generated.tables.records.PollRecord;
+import org.jahanzaib.pollchalenge.generated.tables.records.PollVoteRecord;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
@@ -53,5 +54,11 @@ public class PollDao {
 		return dsl.selectFrom(Tables.POLL_VOTE)
 				.where(Tables.POLL_VOTE.OPTION_ID.eq(optionId))
 				.fetchInto(PollVote.class);
+	}
+	
+	public boolean insertVote(PollVoteRecord vote) {
+		return dsl.insertInto(Tables.POLL_VOTE)
+				.set(vote)
+				.execute() > 0;
 	}
 }

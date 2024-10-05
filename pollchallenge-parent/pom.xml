@@ -1,17 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jahanzaib.pollchallenge</groupId>
-  <artifactId>pollchallenge-parent</artifactId>
-  <version>1.0.0</version>
-  <name>Poll Challenge Parent</name>
-  <packaging>pom</packaging>
-  
-  <modules>
-  	<module>pollchallenge-application</module>
-  	<module>pollchallenge-generated</module>
-  </modules>
-  
-  <distributionManagement>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jahanzaib.pollchallenge</groupId>
+	<artifactId>pollchallenge-parent</artifactId>
+	<version>1.0.0</version>
+	<name>Poll Challenge Parent</name>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>pollchallenge-application</module>
+		<module>pollchallenge-generated</module>
+	</modules>
+
+	<distributionManagement>
 		<repository>
 			<id>central</id>
 			<name>releases</name>

@@ -17,13 +17,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Repository
 public class PollDao {
-	private DSLContext dsl;
+	private final DSLContext dsl;
 	
 	public int insertPoll(PollRecord poll) {
 		return dsl.insertInto(Tables.POLL)
 				.set(poll)
 				.returning(Tables.POLL.ID)
-				.fetchOptionalInto(Integer.class).orElse(0);
+				.fetchOne()
+				.getId();
 	}
 	
 	public boolean insertPollOptions(List<PollOptionRecord> pollOptions) {

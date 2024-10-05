@@ -18,9 +18,11 @@ import org.jahanzaib.pollchallenge.web.model.PollVoteInfo;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class PollService {
 	private final PollRecordBuilder recordBuilder;
 	private final PollDao dao;
@@ -32,9 +34,11 @@ public class PollService {
 		int insertedPollId = dao.insertPoll(poll);
 		
 		if (insertedPollId > 0) {
+			log.info("Inserted new poll successfully with ID {}, now inserting options", insertedPollId);
 			List<PollOptionRecord> optionRecords = recordBuilder.buildOptionRecords(createRequest.getOptions(), insertedPollId);
 			success = dao.insertPollOptions(optionRecords);
 		} else {
+			log.info("Failed to insert new poll for request {}", createRequest.toString());
 			success = false;
 		}
 		
@@ -49,12 +53,19 @@ public class PollService {
 	
 	public PollInfo getPollInfoByPollId(int pollId) {
 		
+		PollInfo pollInfoToReturn = null;
+		
 		Poll fetchedPoll = dao.fetchPollById(pollId);
 		
-		List<PollOptionInfo> optionsInfo = getOptionsForPoll(pollId);
-		PollInfo pollInfo = new PollInfo(pollId, fetchedPoll.getName(), optionsInfo);
+		if (fetchedPoll != null) {
+			log.info("Successfully fetched poll with ID {}, now fetching options and votes...", pollId);
+			List<PollOptionInfo> optionsInfo = getOptionsForPoll(pollId);
+			pollInfoToReturn = new PollInfo(pollId, fetchedPoll.getName(), optionsInfo);
+		} else {
+			log.info("Failed to fetch poll with ID {}", pollId);
+		}
 		
-		return pollInfo;
+		return pollInfoToReturn;
 	}
 
 	private List<PollOptionInfo> getOptionsForPoll(int pollId) {

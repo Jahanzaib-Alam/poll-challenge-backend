@@ -1,20 +1,16 @@
 package org.jahanzaib.pollchallenge.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.jahanzaib.pollchalenge.generated.tables.pojos.Poll;
 import org.jahanzaib.pollchalenge.generated.tables.pojos.PollOption;
 import org.jahanzaib.pollchalenge.generated.tables.pojos.PollVote;
 import org.jahanzaib.pollchalenge.generated.tables.records.PollOptionRecord;
 import org.jahanzaib.pollchalenge.generated.tables.records.PollRecord;
-import org.jahanzaib.pollchallenge.builder.PollRecordBuilder;
+import org.jahanzaib.pollchallenge.builder.PollDataBuilder;
 import org.jahanzaib.pollchallenge.dao.PollDao;
-import org.jahanzaib.pollchallenge.util.PollDataCalculator;
 import org.jahanzaib.pollchallenge.web.model.CreatePollRequest;
 import org.jahanzaib.pollchallenge.web.model.PollInfo;
-import org.jahanzaib.pollchallenge.web.model.PollOptionInfo;
-import org.jahanzaib.pollchallenge.web.model.PollVoteInfo;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -24,19 +20,18 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class PollService {
-	private final PollRecordBuilder recordBuilder;
+	private final PollDataBuilder dataBuilder;
 	private final PollDao dao;
-	private final PollDataCalculator dataCalculator;
 	
 	public boolean createPoll(CreatePollRequest createRequest) {
 		boolean success = false;
 		
-		PollRecord poll = recordBuilder.buildPollRecord(createRequest.getName(), createRequest.getQuestion());
+		PollRecord poll = dataBuilder.buildPollRecord(createRequest.getName(), createRequest.getQuestion());
 		int insertedPollId = dao.insertPoll(poll);
 		
 		if (insertedPollId > 0) {
 			log.info("Inserted new poll successfully with ID {}, now inserting options", insertedPollId);
-			List<PollOptionRecord> optionRecords = recordBuilder.buildOptionRecords(createRequest.getOptions(), insertedPollId);
+			List<PollOptionRecord> optionRecords = dataBuilder.buildOptionRecords(createRequest.getOptions(), insertedPollId);
 			success = dao.insertPollOptions(optionRecords);
 		} else {
 			log.info("Failed to insert new poll for request {}", createRequest.toString());
@@ -52,7 +47,7 @@ public class PollService {
 	}
 	
 	public boolean placeVote(int optionId) {
-		return dao.insertVote(recordBuilder.buildVoteRecord(optionId));
+		return dao.insertVote(dataBuilder.buildVoteRecord(optionId));
 	}
 	
 	public PollInfo getActivePollInfo() {
@@ -66,29 +61,10 @@ public class PollService {
 			log.info("Failed to fetch poll with ID {}", pollId);
 			return null;
 		}
-		
-		log.info("Successfully fetched poll with ID {}, now fetching options and votes...", pollId);
-		PollInfo pollInfoToReturn = new PollInfo(fetchedPoll);
-		pollInfoToReturn.setOptions(getOptionsForPoll(pollId));
-		return pollInfoToReturn;
-	}
-
-	private List<PollOptionInfo> getOptionsForPoll(int pollId) {
+		log.info("Successfully fetched poll with ID {}, now fetching options and votes and building response...", pollId);
 		List<PollOption> fetchedOptions = dao.fetchPollOptionsByPollId(pollId);
+		List<PollVote> fetchedVotes = dao.fetchPollVotesByPollId(pollId);
 		
-		List<PollOptionInfo> optionsInfo = fetchedOptions.stream().map(option -> {
-			PollOptionInfo optionInfo = new PollOptionInfo(option);
-			optionInfo.setVotes(getVotesForOption(option.getId()));
-			return optionInfo;
-		}).collect(Collectors.toList());
-		
-		dataCalculator.calculateAndSetTotalsAndPercentages(optionsInfo);
-		
-		return optionsInfo;
-	}
-
-	private List<PollVoteInfo> getVotesForOption(int optionId) {
-		List<PollVote> fetchedVotes = dao.fetchPollVotesByOptionId(optionId);
-		return fetchedVotes.stream().map(vote -> new PollVoteInfo(vote.getPlacedDateTime())).collect(Collectors.toList());
+		return dataBuilder.buildPollInfoFromFetchedData(fetchedPoll, fetchedOptions, fetchedVotes);
 	}
 }

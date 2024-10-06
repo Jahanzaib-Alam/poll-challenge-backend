@@ -51,9 +51,12 @@ public class PollDao {
 			.fetchInto(PollOption.class);
 	}
 	
-	public List<PollVote> fetchPollVotesByOptionId(int optionId) {
-		return dsl.selectFrom(Tables.POLL_VOTE)
-			.where(Tables.POLL_VOTE.OPTION_ID.eq(optionId))
+	public List<PollVote> fetchPollVotesByPollId(int pollId) {
+		return dsl.select(Tables.POLL_VOTE.fields())
+			.from(Tables.POLL_VOTE)
+			.join(Tables.POLL_OPTION)
+			.on(Tables.POLL_OPTION.ID.eq(Tables.POLL_VOTE.OPTION_ID))
+			.where(Tables.POLL_OPTION.POLL_ID.eq(pollId))
 			.fetchInto(PollVote.class);
 	}
 	

@@ -1,5 +1,6 @@
 package org.jahanzaib.pollchallenge.web.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.jahanzaib.pollchalenge.generated.tables.pojos.PollOption;
@@ -13,7 +14,7 @@ public class PollOptionInfo {
 	private int id;
 	private String optionText;
 	private int numVotes;
-	private int percentageOfTotal;
+	private BigDecimal percentageOfTotal;
 	private List<PollVoteInfo> votes;
 	
 	public PollOptionInfo(PollOption jooqOption) {

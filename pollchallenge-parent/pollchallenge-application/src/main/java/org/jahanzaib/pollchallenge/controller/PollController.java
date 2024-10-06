@@ -45,11 +45,11 @@ public class PollController {
 	}
 	
 	@PostMapping("/activate/{pollId}")
-	public ResponseEntity<PollInfo> activatePoll(@PathVariable("pollId") int pollId) {
+	public ResponseEntity<Void> activatePoll(@PathVariable("pollId") int pollId) {
 		log.info("Processing request to activate poll with ID {}", pollId);
 		boolean pollActivated = service.activatePoll(pollId);
 		
-		return pollActivated ? ResponseEntity.ok().build() : ResponseEntity.internalServerError().build();
+		return returnOkIfSuccess(pollActivated);
 	}
 	
 	@PostMapping("/create")
@@ -57,7 +57,7 @@ public class PollController {
 		log.info("Processing request to create poll for request {}", createRequest.toString());
 		boolean pollCreated = service.createPoll(createRequest);
 		
-		return pollCreated ? ResponseEntity.ok().build() : ResponseEntity.internalServerError().build();
+		return returnOkIfSuccess(pollCreated);
 	}
 	
 	@PostMapping("/vote/{optionId}")
@@ -65,6 +65,10 @@ public class PollController {
 		log.info("Processing request to place vote for option with ID {}", optionId);
 		boolean votePlaced = service.placeVote(optionId);
 		
-		return votePlaced ? ResponseEntity.ok().build() : ResponseEntity.internalServerError().build();
+		return returnOkIfSuccess(votePlaced);
+	}
+	
+	private ResponseEntity<Void> returnOkIfSuccess(boolean success) {
+		return success ? ResponseEntity.ok().build() : ResponseEntity.internalServerError().build();
 	}
 }

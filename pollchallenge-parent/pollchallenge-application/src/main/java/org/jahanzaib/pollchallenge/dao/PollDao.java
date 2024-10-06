@@ -21,45 +21,58 @@ public class PollDao {
 	
 	public int insertPoll(PollRecord poll) {
 		return dsl.insertInto(Tables.POLL)
-				.set(poll)
-				.returning(Tables.POLL.ID)
-				.fetchOne()
-				.getId();
+			.set(poll)
+			.returning(Tables.POLL.ID)
+			.fetchOne()
+			.getId();
 	}
 	
 	public boolean insertPollOptions(List<PollOptionRecord> pollOptions) {
 		return dsl.batchInsert(pollOptions)
-				.execute().length == pollOptions.size();
+			.execute().length == pollOptions.size();
 	}
 	
 	public int fetchActivePollId() {
 		return dsl.select(Tables.POLL.ID)
-				.from(Tables.POLL)
-				.where(Tables.POLL.IS_ACTIVE.eq(true))
-				.fetchOptionalInto(Integer.class).orElse(0);
+			.from(Tables.POLL)
+			.where(Tables.POLL.IS_ACTIVE.eq(true))
+			.fetchOptionalInto(Integer.class).orElse(0);
 	}
 	
 	public Poll fetchPollById(int pollId) {
 		return dsl.selectFrom(Tables.POLL)
-				.where(Tables.POLL.ID.eq(pollId))
-				.fetchOneInto(Poll.class);
+			.where(Tables.POLL.ID.eq(pollId))
+			.fetchOneInto(Poll.class);
 	}
 	
 	public List<PollOption> fetchPollOptionsByPollId(int pollId) {
 		return dsl.selectFrom(Tables.POLL_OPTION)
-				.where(Tables.POLL_OPTION.POLL_ID.eq(pollId))
-				.fetchInto(PollOption.class);
+			.where(Tables.POLL_OPTION.POLL_ID.eq(pollId))
+			.fetchInto(PollOption.class);
 	}
 	
 	public List<PollVote> fetchPollVotesByOptionId(int optionId) {
 		return dsl.selectFrom(Tables.POLL_VOTE)
-				.where(Tables.POLL_VOTE.OPTION_ID.eq(optionId))
-				.fetchInto(PollVote.class);
+			.where(Tables.POLL_VOTE.OPTION_ID.eq(optionId))
+			.fetchInto(PollVote.class);
+	}
+	
+	public void deactivateAllPolls() {
+		dsl.update(Tables.POLL)
+			.set(Tables.POLL.IS_ACTIVE, false)
+			.execute();
+	}
+	
+	public boolean activatePoll(int pollId) {
+		return dsl.update(Tables.POLL)
+			.set(Tables.POLL.IS_ACTIVE, true)
+			.where(Tables.POLL.ID.eq(pollId))
+			.execute() > 0;
 	}
 	
 	public boolean insertVote(PollVoteRecord vote) {
 		return dsl.insertInto(Tables.POLL_VOTE)
-				.set(vote)
-				.execute() > 0;
+			.set(vote)
+			.execute() > 0;
 	}
 }

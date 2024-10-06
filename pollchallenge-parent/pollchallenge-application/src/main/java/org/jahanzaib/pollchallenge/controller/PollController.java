@@ -44,6 +44,14 @@ public class PollController {
 		return ResponseEntity.ok(info);
 	}
 	
+	@PostMapping("/activate/{pollId}")
+	public ResponseEntity<PollInfo> activatePoll(@PathVariable("pollId") int pollId) {
+		log.info("Processing request to activate poll with ID {}", pollId);
+		boolean pollActivated = service.activatePoll(pollId);
+		
+		return pollActivated ? ResponseEntity.ok().build() : ResponseEntity.internalServerError().build();
+	}
+	
 	@PostMapping("/create")
 	public ResponseEntity<Void> createPoll(@RequestBody(required=true) CreatePollRequest createRequest) {
 		log.info("Processing request to create poll for request {}", createRequest.toString());

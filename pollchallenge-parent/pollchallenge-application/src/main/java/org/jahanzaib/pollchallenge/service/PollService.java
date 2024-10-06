@@ -1,6 +1,7 @@
 package org.jahanzaib.pollchallenge.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jahanzaib.pollchalenge.generated.tables.pojos.Poll;
 import org.jahanzaib.pollchalenge.generated.tables.pojos.PollOption;
@@ -52,6 +53,10 @@ public class PollService {
 	
 	public PollInfo getActivePollInfo() {
 		return getPollInfoByPollId(dao.fetchActivePollId());
+	}
+	
+	public List<PollInfo> getAllPolls() {
+		return dao.fetchAllPolls().stream().map(poll -> new PollInfo(poll)).collect(Collectors.toList());
 	}
 	
 	public PollInfo getPollInfoByPollId(int pollId) {

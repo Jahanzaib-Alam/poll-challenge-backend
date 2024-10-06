@@ -1,5 +1,7 @@
 package org.jahanzaib.pollchallenge.controller;
 
+import java.util.List;
+
 import org.jahanzaib.pollchallenge.service.PollService;
 import org.jahanzaib.pollchallenge.web.model.CreatePollRequest;
 import org.jahanzaib.pollchallenge.web.model.PollInfo;
@@ -43,6 +45,14 @@ public class PollController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		return ResponseEntity.ok(info);
+	}
+	
+	@GetMapping("/list")
+	public ResponseEntity<List<PollInfo>> getAllPolls() {
+		log.info("Processing request to get list of all polls");
+		List<PollInfo> allPolls = service.getAllPolls();
+		
+		return ResponseEntity.ok(allPolls);
 	}
 	
 	@PostMapping("/activate/{pollId}")

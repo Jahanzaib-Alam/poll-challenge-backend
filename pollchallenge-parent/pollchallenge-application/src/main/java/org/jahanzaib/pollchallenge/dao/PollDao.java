@@ -39,6 +39,11 @@ public class PollDao {
 			.fetchOptionalInto(Integer.class).orElse(0);
 	}
 	
+	public List<Poll> fetchAllPolls() {
+		return dsl.selectFrom(Tables.POLL)
+			.fetchInto(Poll.class);
+	}
+	
 	public Poll fetchPollById(int pollId) {
 		return dsl.selectFrom(Tables.POLL)
 			.where(Tables.POLL.ID.eq(pollId))

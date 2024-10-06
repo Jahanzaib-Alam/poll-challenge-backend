@@ -33,11 +33,9 @@
 		<spring-boot-version>3.3.4</spring-boot-version>
 		<spring-jooq-version>3.18.5</spring-jooq-version>
 		<mysql-connector-version>9.0.0</mysql-connector-version>
-		<jib-maven-plugin-version>3.4.0</jib-maven-plugin-version>
-		<maven-deploy-plugin-version>3.1.1</maven-deploy-plugin-version>
 		<maven-clean-plugin-version>3.3.2</maven-clean-plugin-version>
 		<build-helper-maven-plugin-version>3.5.0</build-helper-maven-plugin-version>
-		<maven-surefire-plugin-version>3.2.5</maven-surefire-plugin-version>
+		<lombok-version>1.18.34</lombok-version>
 	</properties>
 
 	<dependencyManagement>
@@ -53,22 +51,22 @@
 	</dependencyManagement>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-deploy-plugin</artifactId>
-					<version>${maven-deploy-plugin-version}</version>
-					<configuration>
-						<deployAtEnd>true</deployAtEnd>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>${maven-surefire-plugin-version}</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<release>17</release>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok-version}</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>

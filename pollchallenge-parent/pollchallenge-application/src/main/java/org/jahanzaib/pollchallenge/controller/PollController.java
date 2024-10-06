@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,7 +54,7 @@ public class PollController {
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<Void> createPoll(@RequestBody(required=true) CreatePollRequest createRequest) {
+	public ResponseEntity<Void> createPoll(@Valid @RequestBody(required=true) CreatePollRequest createRequest) {
 		log.info("Processing request to create poll for request {}", createRequest.toString());
 		boolean pollCreated = service.createPoll(createRequest);
 		

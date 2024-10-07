@@ -1,0 +1,142 @@
+{
+	"info": {
+		"_postman_id": "6f870057-6d46-48af-a0eb-c529684e969c",
+		"name": "Poll Challenge API Collection",
+		"description": "This collection provides requests for interacting with the Poll Challenge API Application.\n\nListed below are the requests supported by the API.\n\n### Create Poll - /polls/create\n\nCreates a poll using the provided JSON request body containing the poll name, question, and options. Example request JSON below:\n\n``` json\n{\n    \"name\": \"Big Pet Poll\",\n    \"question\": \"Which of the following is your favourite pet?\",\n    \"options\": [\n        \"Cat\",\n        \"Dog\",\n        \"Turtle\",\n        \"Cow\",\n        \"Monkey\",\n        \"Dinosaur\",\n        \"Donkey\"\n    ]\n}\n\n ```\n\n### Place Vote - /polls/vote/{{option_id}}\n\nPlaces a vote for a given option. Each option ID is unique across all polls. To get the option IDs for a given poll, send a \"Get Poll by ID\" request detailed further below.\n\n### Activate Poll - /polls/activate/{{poll_id}}\n\nActivates the poll with the given ID. For a list of poll IDs, send a \"List Polls\" request detailed further below.\n\n### List polls - /polls/list\n\nProvides a list of all polls with their IDs, names, and questions.\n\n### Get Poll by ID - /polls/{{poll_id}}\n\nProvides detailed information about a giiven poll including poll name, question, options, votes and percentages of votes. Example response JSON below:\n\n``` json\n{\n    \"id\": 15,\n    \"name\": \"Big Pet Poll\",\n    \"questionText\": \"What is your favourite kind of pet?\",\n    \"options\": [\n        {\n            \"id\": 7,\n            \"optionText\": \"Cat\",\n            \"numVotes\": 3,\n            \"percentageOfTotal\": 75.00,\n            \"votes\": [\n                {\n                    \"votePlacedDateTime\": \"2024-10-06T23:39:19\"\n                },\n                {\n                    \"votePlacedDateTime\": \"2024-10-06T23:39:35\"\n                },\n                {\n                    \"votePlacedDateTime\": \"2024-10-06T23:39:37\"\n                }\n            ]\n        },\n        {\n            \"id\": 1,\n            \"optionText\": \"Dog\",\n            \"numVotes\": 1,\n            \"percentageOfTotal\": 25.00,\n            \"votes\": [\n                {\n                    \"votePlacedDateTime\": \"2024-10-06T23:39:32\"\n                }\n            ]\n        }\n    ]\n}\n\n ```\n\n### Get Active Poll - /polls/active\n\nReturns the currently active poll. Returns 404 Not Found if there is no active poll. The content is the same as in the \"Get Poll By ID\" response.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23049863"
+	},
+	"item": [
+		{
+			"name": "Create Poll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Big Pet Poll\",\r\n    \"question\": \"Which of the following is your favourite pet?\",\r\n    \"options\": [\r\n        \"Cat\",\r\n        \"Dog\",\r\n        \"Turtle\",\r\n        \"Cow\",\r\n        \"Monkey\",\r\n        \"Dinosaur\",\r\n        \"Donkey\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/polls/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"polls",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Active Poll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/polls/active",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"polls",
+						"active"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Poll by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/polls/{{poll_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"polls",
+						"{{poll_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Place Vote",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/polls/vote/{{option_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"polls",
+						"vote",
+						"{{option_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activate Poll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/polls/activate/{{poll_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"polls",
+						"activate",
+						"{{poll_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Polls",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/polls/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"polls",
+						"list"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

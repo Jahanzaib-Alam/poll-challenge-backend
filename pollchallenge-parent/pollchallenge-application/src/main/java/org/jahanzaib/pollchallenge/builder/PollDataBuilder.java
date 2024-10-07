@@ -24,6 +24,10 @@ import lombok.RequiredArgsConstructor;
 public class PollDataBuilder {
 	private final PollDataCalculator dataCalculator;
 	
+	/**
+	 * Build a poll jooq record using no-args constructor to avoid breaking the build
+	 * when new columns are added in the database
+	 */
 	public PollRecord buildPollRecord(String pollName, String question) {
 		PollRecord pollRecord = new PollRecord();
 		
@@ -33,6 +37,10 @@ public class PollDataBuilder {
 		return pollRecord;
 	}
 	
+	/**
+	 * Build a list of poll option jooq records using no-args constructor to avoid breaking the build
+	 * when new columns are added in the database
+	 */
 	public List<PollOptionRecord> buildOptionRecords(List<String> options, int pollId) {
 		List<PollOptionRecord> optionRecords = new ArrayList<>();
 		
@@ -46,6 +54,10 @@ public class PollDataBuilder {
 		return optionRecords;
 	}
 	
+	/**
+	 * Build a poll vote jooq record using no-args constructor to avoid breaking the build
+	 * when new columns are added in the database
+	 */
 	public PollVoteRecord buildVoteRecord(int optionId) {
 		PollVoteRecord voteRecord = new PollVoteRecord();
 		

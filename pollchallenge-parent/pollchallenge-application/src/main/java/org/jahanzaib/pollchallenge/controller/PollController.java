@@ -25,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 public class PollController {
 	private final PollService service;
 	
+	// -- GET MAPPINGS --
+	
 	@GetMapping("/active")
 	public ResponseEntity<PollInfo> getActivePoll() {
 		log.info("Processing request to get currently active poll...");
@@ -55,13 +57,7 @@ public class PollController {
 		return ResponseEntity.ok(allPolls);
 	}
 	
-	@PostMapping("/activate/{pollId}")
-	public ResponseEntity<Void> activatePoll(@PathVariable("pollId") int pollId) {
-		log.info("Processing request to activate poll with ID {}", pollId);
-		boolean pollActivated = service.activatePoll(pollId);
-		
-		return returnOkIfSuccess(pollActivated);
-	}
+	// -- POST MAPPINGS --
 	
 	@PostMapping("/create")
 	public ResponseEntity<Void> createPoll(@Valid @RequestBody(required=true) CreatePollRequest createRequest) {
@@ -69,6 +65,14 @@ public class PollController {
 		boolean pollCreated = service.createPoll(createRequest);
 		
 		return returnOkIfSuccess(pollCreated);
+	}
+	
+	@PostMapping("/activate/{pollId}")
+	public ResponseEntity<Void> activatePoll(@PathVariable("pollId") int pollId) {
+		log.info("Processing request to activate poll with ID {}", pollId);
+		boolean pollActivated = service.activatePoll(pollId);
+		
+		return returnOkIfSuccess(pollActivated);
 	}
 	
 	@PostMapping("/vote/{optionId}")

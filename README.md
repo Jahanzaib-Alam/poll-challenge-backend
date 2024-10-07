@@ -5,6 +5,9 @@ Java 17 Spring Boot API with Maven for Poll Application Backend
 - Eclipse with Java 17 JDK and Tomcat 10.1.x
 - Lombok
 
+# API Usage Instructions
+A Postman collection can be downloaded from [here](https://github.com/Jahanzaib-Alam/poll-challenge-backend/blob/main/Poll%20Challenge%20API%20Collection.postman_collection.json) with all of the requests supported by this API.
+
 # Local set up instructions
 1. Ensure Eclipse installed with a Java 17 JDK and version of Tomcat that supports Java 17 (Tomcat version 10.1.x or later).
 2. Ensure Lombok is installed in Eclipse.

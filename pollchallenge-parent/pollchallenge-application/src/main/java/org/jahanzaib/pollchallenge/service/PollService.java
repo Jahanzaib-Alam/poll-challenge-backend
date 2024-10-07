@@ -24,6 +24,11 @@ public class PollService {
 	private final PollDataBuilder dataBuilder;
 	private final PollDao dao;
 	
+	/**
+	 * Create a poll and save it in the database from a CreatePollRequest object.
+	 * @param createRequest model object representing JSON passed in the request to the API
+	 * @return success result on successful creation of the poll
+	 */
 	public boolean createPoll(CreatePollRequest createRequest) {
 		boolean success = false;
 		
@@ -42,17 +47,19 @@ public class PollService {
 		return success;
 	}
 	
+	/**
+	 * Deactivate all polls and activate a poll if specified
+	 * @param pollId ID of the poll to activate. If not greater than 0, this method will just deactivate all polls
+	 * @return success result on activation of specified poll (or just true if no poll is being activated).
+	 */
 	public boolean activatePoll(int pollId) {
 		dao.deactivateAllPolls();
-		return dao.activatePoll(pollId);
+		// If the poll ID was not > 0, we are just deactivating all polls. Else activate the specified poll.
+		return pollId > 0 ? dao.activatePoll(pollId) : true;
 	}
 	
 	public boolean placeVote(int optionId) {
 		return dao.insertVote(dataBuilder.buildVoteRecord(optionId));
-	}
-	
-	public PollInfo getActivePollInfo() {
-		return getPollInfoByPollId(dao.fetchActivePollId());
 	}
 	
 	public List<PollInfo> getAllPolls() {
@@ -71,5 +78,9 @@ public class PollService {
 		List<PollVote> fetchedVotes = dao.fetchPollVotesByPollId(pollId);
 		
 		return dataBuilder.buildPollInfoFromFetchedData(fetchedPoll, fetchedOptions, fetchedVotes);
+	}
+	
+	public PollInfo getActivePollInfo() {
+		return getPollInfoByPollId(dao.fetchActivePollId());
 	}
 }

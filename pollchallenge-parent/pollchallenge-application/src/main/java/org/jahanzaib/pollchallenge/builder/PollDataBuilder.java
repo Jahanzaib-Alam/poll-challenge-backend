@@ -55,6 +55,13 @@ public class PollDataBuilder {
 		return voteRecord;
 	}
 	
+	/**
+	 * Combine database object information into one object to be returned in the GET poll response.
+	 * @param fetchedPoll fetched pojo from the `poll` table
+	 * @param fetchedOptions fetched pojos from the `poll_option` table
+	 * @param fetchedVotes fetched pojos from the `poll_vote` table
+	 * @return PollInfo Object containing poll name, question, options, and votes.
+	 */
 	public PollInfo buildPollInfoFromFetchedData(Poll fetchedPoll, List<PollOption> fetchedOptions, List<PollVote> fetchedVotes) {
 		PollInfo builtInfo = new PollInfo(fetchedPoll);
 		

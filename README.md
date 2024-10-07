@@ -15,7 +15,7 @@ A Postman collection can be downloaded from [here](https://github.com/Jahanzaib-
 4. On the GitHub repository page, click clone and choose the http option and copy it to clipboard.
 5. Click the clone button to clone a git repository.
 6. Once the repository has been cloned, expand the working tree, right click the poll-challenge-parent project and do "Import Projects".
-7. Ensure all three projects are being imported (parent, generated, and application).
+7. Ensure all three projects are imported (parent, generated, and application).
 8. Now switch to the Java perspective and right click on poll-challenge-parent and do Maven -> Build...
 9. In the goals, use "clean install" and tick the "Skip Tests" checkbox. Run the build.
 10. Right click pollchallenge-application/src/main/java/Application.java and Run As -> Java Application.

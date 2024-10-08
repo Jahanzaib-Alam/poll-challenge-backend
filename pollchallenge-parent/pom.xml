@@ -13,19 +13,6 @@
 		<module>pollchallenge-generated</module>
 	</modules>
 
-	<distributionManagement>
-		<repository>
-			<id>central</id>
-			<name>releases</name>
-			<url>${url.libs-release}</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>snapshots</name>
-			<url>${url.libs-snapshot}</url>
-		</snapshotRepository>
-	</distributionManagement>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>17</maven.compiler.target>

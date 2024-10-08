@@ -32,13 +32,10 @@
 						<configuration>
 							<jdbc>
 								<driver>com.mysql.cj.jdbc.Driver</driver>
-								<!-- These should be set in your active profile
-								in the maven settings.xml -->
-								<url>${jdbc.url}</url>
-								<user>${jdbc.user}</user>
-								<password>${jdbc.password}</password>
+								<url>jdbc:mysql://localhost:3306/poll_challenge</url>
+								<user>poll_user</user>
+								<password>fl@tAlarm94</password>
 							</jdbc>
-							<!-- Generator parameters -->
 							<generator>
 								<name>org.jooq.codegen.JavaGenerator</name>
 								<database>

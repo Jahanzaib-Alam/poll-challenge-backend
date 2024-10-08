@@ -1,3 +1,4 @@
+/* Note: Ensure you don't have a database called poll_challenge or a user called poll_user before running this script. This will delete the existing user and database */
 DROP DATABASE IF EXISTS `poll_challenge`;
 
 CREATE DATABASE `poll_challenge` DEFAULT CHARACTER SET utf8mb4;

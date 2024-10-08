@@ -5,7 +5,8 @@ Java 17 Spring Boot API with Maven for Poll Application Backend
 A Postman collection can be downloaded from [here](https://github.com/Jahanzaib-Alam/poll-challenge-backend/blob/main/Poll%20Challenge%20API%20Collection.postman_collection.json) with all of the requests supported by this API.
 
 # Prerequisites for Local Setup
-- MySQL Server version 8 Running on localhost:3306
+- MySQL Server version 8 running on localhost:3306
+- poll_challenge database and user set up as per the instructions at the bottom of this README
 - Eclipse with Java 17 JDK and Tomcat 10.1.x
 - Lombok
 
@@ -20,3 +21,7 @@ A Postman collection can be downloaded from [here](https://github.com/Jahanzaib-
 8. Now switch to the Java perspective and right click on poll-challenge-parent and do Maven -> Build...
 9. In the goals, use "clean install" and tick the "Skip Tests" checkbox. Run the build.
 10. Right click pollchallenge-application/src/main/java/Application.java and Run As -> Java Application.
+
+# Database Set Up Instructions
+1. Install MySQL Server version 8.x.x and ensure it is running on localhost:3306.
+2. Run the script in [the DATABASE SETUP.sql file](https://github.com/Jahanzaib-Alam/poll-challenge-backend/blob/main/DATABASE%20SETUP.sql) to create the database and required database user along with some test data.
